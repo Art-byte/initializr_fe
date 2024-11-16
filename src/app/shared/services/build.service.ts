@@ -15,4 +15,9 @@ export class BuildService {
     return this.http.get<BuildData>(`${this.source}/build/data`);
   }
 
+  hasPreviousData(): boolean {
+    const session = sessionStorage.getItem("buildData");
+    return session !== null;
+  }
+
 }

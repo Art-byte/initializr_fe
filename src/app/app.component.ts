@@ -52,15 +52,28 @@ export class AppComponent implements OnInit{
 
     getAllParameters(){
       this.dataLoaded = false;
-      this.buildService.getAllParameters().subscribe((data: BuildData) => {
-        this.setValuesDefault(data);
-        this.readLanguageBody(data.language);
-        this.readTypeBody(data.type);
-        this.readSpringBoorVersions(data.bootVersion);
-        this.readPackaging(data.packaging);
-        this.readJavaVersion(data.javaVersion);
-        this.dataLoaded = true;
-      })
+      const validateData = this.buildService.hasPreviousData();
+      if(validateData){
+        console.log("Usamos los datos en memoria")
+        const data: BuildData = JSON.parse(sessionStorage.getItem("buildData"));
+        this.loadDataFromSession(data);
+      } else {
+        this.buildService.getAllParameters().subscribe((data: BuildData) => {
+          console.log("Cargamos desde 0")
+          sessionStorage.setItem("buildData", JSON.stringify(data));
+          this.loadDataFromSession(data);
+        });
+      }
+    }
+
+    loadDataFromSession(data: BuildData) {
+      this.setValuesDefault(data);
+      this.readLanguageBody(data.language);
+      this.readTypeBody(data.type);
+      this.readSpringBoorVersions(data.bootVersion);
+      this.readPackaging(data.packaging);
+      this.readJavaVersion(data.javaVersion);
+      this.dataLoaded = true;
     }
 
   setValuesDefault(data: BuildData): void{
@@ -69,6 +82,12 @@ export class AppComponent implements OnInit{
     this.buildFormGroup.get('name').setValue(data.name);
     this.buildFormGroup.get('description').setValue(data.description);
     this.buildFormGroup.get('packageName').setValue(data.packageName);
+  }
+
+  sendAndClean(){
+      console.log("Simulando el envio");
+      this.buildFormGroup.reset();
+      this.getAllParameters();
   }
 
   readJavaVersion(pJavaVersion: JavaVersion): void{
