@@ -1,0 +1,17 @@
+:host {
+  display: block; /* Asegura que el host ocupe todo el espacio disponible */
+  background: black;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  padding: 1rem; /* Agrega un poco de espacio alrededor del contenedor */
+}
+
+.container {
+  background: #707071;
+  padding: 2rem; /* Ajusta el padding para dar espacio interno */
+  border-radius: 8px; /* Opcional: redondea las esquinas del contenedor */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Opcional: agrega una sombra */
+}
+
+label {
+  color: white;
+}
