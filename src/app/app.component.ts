@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, NgModule, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {BuildService} from "./shared/services/build.service";
 import {BuildData} from "./shared/models/build-data";
@@ -9,6 +9,9 @@ import {Packaging} from "./shared/models/packaging";
 import {JavaVersion} from "./shared/models/java-version";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SpinnerComponent} from "./components/spinner/spinner.component";
+import {Dependencies} from "./shared/models/dependencies";
+import {CommonModule} from "@angular/common";
+import {DependenciesModalComponent} from "./components/dependencies-modal/dependencies-modal.component";
 
 @Component({
   selector: 'app-root',
@@ -16,7 +19,9 @@ import {SpinnerComponent} from "./components/spinner/spinner.component";
   imports: [
     RouterOutlet,
     ReactiveFormsModule,
-    SpinnerComponent
+    SpinnerComponent,
+    CommonModule,
+    DependenciesModalComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -28,9 +33,15 @@ export class AppComponent implements OnInit{
   languageList: any[] = [];
   bootVersions: any[] = [];
   javaVersionList: any[] = [];
+  dependenciesList: any[] = [];
+
+  depDummyList: any[] = ["java", "python", "other"];
+
   buildFormGroup: FormGroup;
 
   dataLoaded: boolean = false;
+  isCollapsed = false;
+  showModal = false;
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly buildService = inject(BuildService);
@@ -73,6 +84,7 @@ export class AppComponent implements OnInit{
       this.readSpringBoorVersions(data.bootVersion);
       this.readPackaging(data.packaging);
       this.readJavaVersion(data.javaVersion);
+      this.readDependencies(data.dependencies);
       this.dataLoaded = true;
     }
 
@@ -85,14 +97,17 @@ export class AppComponent implements OnInit{
   }
 
   sendAndClean(){
-      console.log("Simulando el envio");
       this.buildFormGroup.reset();
       this.getAllParameters();
   }
 
-  readJavaVersion(pJavaVersion: JavaVersion): void{
-      this.javaVersionList = pJavaVersion.values;
-    }
+  readDependencies(pDependencies: Dependencies){
+      this.dependenciesList = pDependencies.values;
+  }
+
+    readJavaVersion(pJavaVersion: JavaVersion): void{
+        this.javaVersionList = pJavaVersion.values;
+      }
 
     readPackaging(pPackaging: Packaging): void {
       this.packagingList = pPackaging.values;
@@ -110,5 +125,8 @@ export class AppComponent implements OnInit{
       this.typeList = pType.values.filter(p => p.name !== "Gradle Config" && p.name !== "Maven POM");
     }
 
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 
 }

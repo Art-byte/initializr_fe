@@ -10,8 +10,41 @@
   padding: 2rem; /* Ajusta el padding para dar espacio interno */
   border-radius: 8px; /* Opcional: redondea las esquinas del contenedor */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Opcional: agrega una sombra */
+  display: flex; /* Usamos flexbox para organizar los elementos */
+  flex-direction: row; /* Alinea los elementos en fila */
+}
+
+.radio-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* Añade un espacio entre las columnas */
+  width: 40%; /* Establecemos el ancho de la columna de los botones de radio */
+}
+
+.radio-buttons-container .col-6 {
+  flex: 1;
+  min-width: 220px; /* Garantiza que cada columna tenga un tamaño mínimo */
+}
+
+.form-container {
+  flex-grow: 1; /* El formulario ocupa el espacio restante */
+  margin-left: 20px; /* Separa el formulario de los botones de radio */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinea el formulario a la izquierda */
+  max-width: 60%; /* Limita el ancho máximo del formulario */
 }
 
 label {
   color: white;
+  margin-bottom: 0.5rem; /* Espacio entre el texto y los elementos */
+}
+
+.form-group {
+  width: 100%; /* Asegura que los inputs abarquen todo el ancho disponible */
+  margin-bottom: 1rem;
+}
+
+button {
+  margin-top: 1rem; /* Espacio arriba del botón */
 }

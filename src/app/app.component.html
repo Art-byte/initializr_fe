@@ -1,58 +1,62 @@
 @if (!dataLoaded) {
   <app-spinner></app-spinner>
 } @else {
-  <div class="container d-flex flex-row">
-    <!-- Sección de botones de radio -->
-    <div class="radio-buttons-container">
-      <label>
-        <h2>Project</h2>
-      </label>
-      @for (typeItem of typeList; track typeItem.id) {
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault">
-          <label class="form-check-label"> {{typeItem.name}} </label>
-        </div>
-      }
+  <div class="container d-flex">
+    <!-- Sección de botones de radio (divididos en dos columnas) -->
+    <div class="radio-buttons-container d-flex flex-wrap">
+      <div class="col-6">
+        <label>
+          <h2>Project</h2>
+        </label>
+        @for (typeItem of typeList; track typeItem.id) {
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault">
+            <label class="form-check-label"> {{typeItem.name}} </label>
+          </div>
+        }
 
-      <label>
-        <h2>Language</h2>
-      </label>
-      @for (langItem of languageList; track langItem.id) {
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault">
-          <label class="form-check-label"> {{langItem.name}} </label>
-        </div>
-      }
+        <label>
+          <h2>Language</h2>
+        </label>
+        @for (langItem of languageList; track langItem.id) {
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault">
+            <label class="form-check-label"> {{langItem.name}} </label>
+          </div>
+        }
 
-      <label>
-        <h2>Spring Boot</h2>
-      </label>
-      @for (bootItem of bootVersions; track bootItem.id) {
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault">
-          <label class="form-check-label"> {{bootItem.name}} </label>
-        </div>
-      }
+        <label>
+          <h2>Spring Boot</h2>
+        </label>
+        @for (bootItem of bootVersions; track bootItem.id) {
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault">
+            <label class="form-check-label"> {{bootItem.name}} </label>
+          </div>
+        }
+      </div>
 
-      <label>
-        <h2>Packaging</h2>
-      </label>
-      @for (pkgItem of packagingList; track pkgItem.id) {
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault">
-          <label class="form-check-label"> {{pkgItem.name}} </label>
-        </div>
-      }
+      <div class="col-6">
+        <label>
+          <h2>Packaging</h2>
+        </label>
+        @for (pkgItem of packagingList; track pkgItem.id) {
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault">
+            <label class="form-check-label"> {{pkgItem.name}} </label>
+          </div>
+        }
 
-      <label>
-        <h2>Java</h2>
-      </label>
-      @for (javaItem of javaVersionList; track javaItem.id) {
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault">
-          <label class="form-check-label"> {{javaItem.name}} </label>
-        </div>
-      }
+        <label>
+          <h2>Java</h2>
+        </label>
+        @for (javaItem of javaVersionList; track javaItem.id) {
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault">
+            <label class="form-check-label"> {{javaItem.name}} </label>
+          </div>
+        }
+      </div>
     </div>
 
     <!-- Sección del formulario -->
@@ -89,6 +93,37 @@
 
       <button class="btn btn-primary" (click)="sendAndClean()">Build</button>
     </div>
-  </div>
 
+      <div class="form-container ms-4">
+        <label>
+          <h2>Summary</h2>
+        </label>
+        <button class="btn btn-primary" (click)="showModal = true">Add Dependency</button>
+        <br>
+        <table class="table table-sm table-dark">
+          <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of depDummyList ; track item.id) {
+              <tr>
+                <td>{{item}}</td>
+                <td>
+                  <button class="btn btn-danger">delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+    @if (showModal) {
+      <app-dependencies-modal [isVisible]="showModal" (closeModal)="showModal = false"></app-dependencies-modal>
+    }
+
+    </div>
 }
+
