@@ -13,9 +13,21 @@ export class DependenciesModalComponent implements OnInit{
   @Input() isVisible: boolean = false;
   @Input() dependencies: DependenciesValues[] = [];
   @Output() closeModal = new EventEmitter<void>();
+  openSections: Set<string> = new Set<string>();
 
   ngOnInit(): void {
-    console.log("Dependencies => " + this.dependencies);
+  }
+
+  toggleSection(sectionName: string) : void{
+    if(this.openSections.has(sectionName)){
+      this.openSections.delete(sectionName);
+    } else {
+      this.openSections.add(sectionName);
+    }
+  }
+
+  isSectionOpen(sectionName: string): boolean{
+    return this.openSections.has(sectionName);
   }
 
   close() {

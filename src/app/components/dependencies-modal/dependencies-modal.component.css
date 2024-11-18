@@ -20,7 +20,7 @@
 }
 
 .modal-body {
-  max-height: 400px; /* Ajusta esta altura según lo que necesites */
+  max-height: 400px;
   overflow-y: auto;
 }
 
@@ -29,4 +29,18 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+
+.accordion-button {
+  background-color: #062457;
+  color: white;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+.accordion-body {
+  padding: 15px;
 }
