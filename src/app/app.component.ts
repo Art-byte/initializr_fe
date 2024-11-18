@@ -35,7 +35,8 @@ export class AppComponent implements OnInit{
   javaVersionList: any[] = [];
   dependenciesList: any[] = [];
 
-  depDummyList: any[] = ["java", "python", "other"];
+  //Esta lista almacena las dependencias seleccionadas
+  depDummyList: any[] = [];
 
   buildFormGroup: FormGroup;
 

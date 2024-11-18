@@ -108,13 +108,22 @@
           </tr>
           </thead>
           <tbody>
-            @for (item of depDummyList ; track item.id) {
+            @if (dependenciesList.length > 0) {
               <tr>
-                <td>{{item}}</td>
                 <td>
-                  <button class="btn btn-danger">delete</button>
+                  <label>Aun no hay dependencias</label>
                 </td>
+                <td></td>
               </tr>
+            } @else {
+              @for (item of depDummyList ; track item.id) {
+                <tr>
+                  <td>{{item}}</td>
+                  <td>
+                    <button class="btn btn-danger">delete</button>
+                  </td>
+                </tr>
+              }
             }
           </tbody>
         </table>

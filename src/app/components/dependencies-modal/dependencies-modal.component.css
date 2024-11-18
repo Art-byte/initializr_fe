@@ -19,6 +19,11 @@
   width: 100%;
 }
 
+.modal-body {
+  max-height: 400px; /* Ajusta esta altura según lo que necesites */
+  overflow-y: auto;
+}
+
 .close-button {
   background: none;
   border: none;
