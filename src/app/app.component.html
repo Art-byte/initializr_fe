@@ -121,7 +121,7 @@
       </div>
 
     @if (showModal) {
-      <app-dependencies-modal [isVisible]="showModal" (closeModal)="showModal = false"></app-dependencies-modal>
+      <app-dependencies-modal [isVisible]="showModal" [dependencies]="dependenciesList" (closeModal)="showModal = false"></app-dependencies-modal>
     }
 
     </div>
