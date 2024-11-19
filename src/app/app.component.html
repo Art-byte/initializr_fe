@@ -100,33 +100,38 @@
         </label>
         <button class="btn btn-primary" (click)="showModal = true">Add Dependency</button>
         <br>
-        <table class="table table-sm table-dark">
+        <table class="table table-sm table-dark text-center align-middle">
           <thead>
           <tr>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            @if (depDummyList.length > 0) {
+              <th scope="col">Dependencia</th>
+              <th scope="col">Acciones</th>
+            } @else {
+              <th scope="col">Información</th>
+            }
           </tr>
           </thead>
           <tbody>
-            @if (dependenciesList.length > 0) {
-              <tr>
-                <td>
-                  <label>Aun no hay dependencias</label>
-                </td>
-                <td></td>
-              </tr>
-            } @else {
-              @for (item of depDummyList ; track item.id) {
+            @if (depDummyList.length > 0) {
+              @for (item of depDummyList; track item) {
                 <tr>
                   <td>{{item}}</td>
                   <td>
-                    <button class="btn btn-danger">delete</button>
+                    <i class="bi bi-trash3 text-danger" role="button" title="Remove"></i>
                   </td>
                 </tr>
               }
+            } @else {
+              <tr>
+                <td colspan="2">
+                  <label>Aun no hay dependencias</label>
+                </td>
+              </tr>
             }
           </tbody>
         </table>
+
+
       </div>
 
     @if (showModal) {

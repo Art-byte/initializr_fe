@@ -36,7 +36,7 @@ export class AppComponent implements OnInit{
   dependenciesList: any[] = [];
 
   //Esta lista almacena las dependencias seleccionadas
-  depDummyList: any[] = [];
+  depDummyList: string[] = ["java", "python", "javascript"];
 
   buildFormGroup: FormGroup;
 
