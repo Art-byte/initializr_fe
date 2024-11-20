@@ -17,8 +17,11 @@ export class DependenciesModalComponent {
   @Input() isVisible: boolean = false;
   @Input() dependencies: DependenciesValues[] = [];
   @Output() closeModal = new EventEmitter<void>();
-  openSections: Set<string> = new Set<string>();
+
+  @Output() dependenciesSelected = new EventEmitter<DepBody[]>();
   selectedDependencies: DepBody[] = [];
+
+  openSections: Set<string> = new Set<string>();
   depObj: DepBody;
 
   onCheckboxChange(depId: string, depName: string, event: Event){
@@ -36,6 +39,7 @@ export class DependenciesModalComponent {
   }
 
   saveDependencies(){
+    this.dependenciesSelected.emit(this.selectedDependencies);
     this.close();
   }
 

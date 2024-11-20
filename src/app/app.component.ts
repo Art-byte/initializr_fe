@@ -12,6 +12,7 @@ import {SpinnerComponent} from "./components/spinner/spinner.component";
 import {Dependencies} from "./shared/models/dependencies";
 import {CommonModule} from "@angular/common";
 import {DependenciesModalComponent} from "./components/dependencies-modal/dependencies-modal.component";
+import {DepBody} from "./shared/models/dep-body";
 
 @Component({
   selector: 'app-root',
@@ -36,12 +37,11 @@ export class AppComponent implements OnInit{
   dependenciesList: any[] = [];
 
   //Esta lista almacena las dependencias seleccionadas
-  depDummyList: string[] = ["java", "python", "javascript"];
+  depFromModal: DepBody[] = [];
 
   buildFormGroup: FormGroup;
 
   dataLoaded: boolean = false;
-  isCollapsed = false;
   showModal = false;
 
   private readonly formBuilder = inject(FormBuilder);
@@ -97,6 +97,10 @@ export class AppComponent implements OnInit{
     this.buildFormGroup.get('packageName').setValue(data.packageName);
   }
 
+  onDependenciesSelected(dependencies: DepBody[]){
+      this.depFromModal = dependencies;
+  }
+
   sendAndClean(){
       this.buildFormGroup.reset();
       this.getAllParameters();
@@ -125,9 +129,5 @@ export class AppComponent implements OnInit{
     readTypeBody(pType: Type): void {
       this.typeList = pType.values.filter(p => p.name !== "Gradle Config" && p.name !== "Maven POM");
     }
-
-  toggleCollapse() {
-    this.isCollapsed = !this.isCollapsed;
-  }
 
 }

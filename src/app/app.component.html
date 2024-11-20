@@ -103,7 +103,7 @@
         <table class="table table-sm table-dark text-center align-middle">
           <thead>
           <tr>
-            @if (depDummyList.length > 0) {
+            @if (depFromModal.length > 0) {
               <th scope="col">Dependencia</th>
               <th scope="col">Acciones</th>
             } @else {
@@ -112,10 +112,10 @@
           </tr>
           </thead>
           <tbody>
-            @if (depDummyList.length > 0) {
-              @for (item of depDummyList; track item) {
+            @if (depFromModal.length > 0) {
+              @for (item of depFromModal; track item) {
                 <tr>
-                  <td>{{item}}</td>
+                  <td>{{item.name}}</td>
                   <td>
                     <i class="bi bi-trash3 text-danger" role="button" title="Remove"></i>
                   </td>
@@ -135,7 +135,13 @@
       </div>
 
     @if (showModal) {
-      <app-dependencies-modal [isVisible]="showModal" [dependencies]="dependenciesList" (closeModal)="showModal = false"></app-dependencies-modal>
+      <app-dependencies-modal
+        [isVisible]="showModal"
+        [dependencies]="dependenciesList"
+        (closeModal)="showModal = false"
+        (dependenciesSelected)="onDependenciesSelected($event)"
+      >
+      </app-dependencies-modal>
     }
 
     </div>
