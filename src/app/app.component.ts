@@ -43,6 +43,13 @@ export class AppComponent implements OnInit{
   //Esta lista almacena las dependencias seleccionadas
   depFromModal: DepBody[] = [];
 
+  //Aqui capturamos los radiobuttons seleccionados
+  javaVersionSelected: string;
+  packagingSelected: string;
+  languageSelected: string;
+  typeSelected: string;
+  bootVersionSelected: string;
+
   buildFormGroup: FormGroup;
   archtype: Archetype;
 
@@ -107,8 +114,15 @@ export class AppComponent implements OnInit{
   }
 
   sendAndClean(){
-      //Capturamos los valores del formulario
      this.archtype = new Archetype();
+     this.archtype.dependencies = this.formatDependencyList(this.depFromModal);
+
+     this.archtype.javaVersion = this.javaVersionSelected;
+     this.archtype.packaging = this.packagingSelected;
+     this.archtype.language = this.languageSelected;
+     this.archtype.type = this.typeSelected;
+     this.archtype.bootVersion = this.bootVersionSelected;
+
      this.archtype.groupId = this.buildFormGroup.get("groupId").value;
      this.archtype.artifactId = this.buildFormGroup.get("artifactId").value;
      this.archtype.name = this.buildFormGroup.get("name").value;
@@ -118,6 +132,12 @@ export class AppComponent implements OnInit{
       // this.buildFormGroup.reset();
       // this.getAllParameters();
   }
+
+  formatDependencyList(arr: DepBody[]): string {
+    const finalArray = arr.map(dep => dep.id);
+    return finalArray.join(', ');
+  }
+
 
   readDependencies(pDependencies: Dependencies){
       this.dependenciesList = pDependencies.values;
@@ -143,4 +163,23 @@ export class AppComponent implements OnInit{
       this.typeList = pType.values.filter(p => p.name !== "Gradle Config" && p.name !== "Maven POM");
     }
 
+    onJavaVersionSelected(javaVersion: string){
+      this.javaVersionSelected = javaVersion;
+    }
+
+    onPackagingSelected(packageStr: string){
+      this.packagingSelected = packageStr;
+    }
+
+    onLanguageSelected(language: string){
+      this.languageSelected = language;
+    }
+
+    onTypeSelected(type: string){
+      this.typeSelected = type;
+    }
+
+    onBootVersionSelected(boot: string){
+      this.bootVersionSelected = boot;
+    }
 }

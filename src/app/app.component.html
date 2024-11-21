@@ -10,7 +10,7 @@
         </label>
         @for (typeItem of typeList; track typeItem.id) {
           <div class="form-check">
-            <input class="form-check-input" type="radio" [value]="typeItem.id">
+            <input class="form-check-input" type="radio" [value]="typeItem.id" (change)="onTypeSelected(typeItem.id)">
             <label class="form-check-label"> {{typeItem.name}} </label>
           </div>
         }
@@ -20,7 +20,7 @@
         </label>
         @for (langItem of languageList; track langItem.id) {
           <div class="form-check">
-            <input class="form-check-input" type="radio" [value]="langItem.id">
+            <input class="form-check-input" type="radio" [value]="langItem.id" (change)="onLanguageSelected(langItem.id)">
             <label class="form-check-label"> {{langItem.name}} </label>
           </div>
         }
@@ -30,7 +30,7 @@
         </label>
         @for (bootItem of bootVersions; track bootItem.id) {
           <div class="form-check">
-            <input class="form-check-input" type="radio" [value]="bootItem.id">
+            <input class="form-check-input" type="radio" [value]="bootItem.id" (change)="onBootVersionSelected(bootItem.id)">
             <label class="form-check-label"> {{bootItem.name}} </label>
           </div>
         }
@@ -42,7 +42,7 @@
         </label>
         @for (pkgItem of packagingList; track pkgItem.id) {
           <div class="form-check">
-            <input class="form-check-input" type="radio" [value]="pkgItem.id">
+            <input class="form-check-input" type="radio" [value]="pkgItem.id" (change)="onPackagingSelected(pkgItem.id)">
             <label class="form-check-label"> {{pkgItem.name}} </label>
           </div>
         }
@@ -50,9 +50,9 @@
         <label>
           <h2>Java</h2>
         </label>
-        @for (javaItem of javaVersionList; track javaItem.id) {
+        @for (javaItem of javaVersionList; track javaItem.id ) {
           <div class="form-check">
-            <input class="form-check-input" type="radio" [value]="javaItem.id">
+            <input class="form-check-input" type="radio" [value]="javaItem.id" (change)="onJavaVersionSelected(javaItem.id)">
             <label class="form-check-label"> {{javaItem.name}} </label>
           </div>
         }

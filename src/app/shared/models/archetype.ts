@@ -3,11 +3,11 @@ export class Archetype {
   type: string;
   language: string;
   bootVersion: string;
-  groupId: string;
-  artifactId: string;
-  name: string;
-  description: string;
+  groupId: string; //ok
+  artifactId: string; // ok
+  name: string; // ok
+  description: string; // ok
   javaVersion: string;
   packaging: string;
-  packageName: string;
+  packageName: string; //ok
 }
