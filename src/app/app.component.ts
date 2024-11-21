@@ -1,5 +1,4 @@
-import {Component, inject, NgModule, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, inject, OnInit} from '@angular/core';
 import {BuildService} from "./shared/services/build.service";
 import {BuildData} from "./shared/models/build-data";
 import {Type} from "./shared/models/type";
@@ -13,12 +12,17 @@ import {Dependencies} from "./shared/models/dependencies";
 import {CommonModule} from "@angular/common";
 import {DependenciesModalComponent} from "./components/dependencies-modal/dependencies-modal.component";
 import {DepBody} from "./shared/models/dep-body";
+import {TypeValues} from "./shared/models/type-values";
+import {PackageValues} from "./shared/models/package-values";
+import {LangValues} from "./shared/models/lang-values";
+import {BootValues} from "./shared/models/boot-values";
+import {JavaValues} from "./shared/models/java-values";
+import {Archetype} from "./shared/models/archetype";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
     ReactiveFormsModule,
     SpinnerComponent,
     CommonModule,
@@ -29,20 +33,21 @@ import {DepBody} from "./shared/models/dep-body";
 })
 export class AppComponent implements OnInit{
 
-  packagingList: any[] = [];
-  typeList: any[] = [];
-  languageList: any[] = [];
-  bootVersions: any[] = [];
-  javaVersionList: any[] = [];
+  packagingList: PackageValues[] = [];
+  typeList: TypeValues[] = [];
+  languageList: LangValues[] = [];
+  bootVersions: BootValues[] = [];
+  javaVersionList: JavaValues[] = [];
   dependenciesList: any[] = [];
 
   //Esta lista almacena las dependencias seleccionadas
   depFromModal: DepBody[] = [];
 
   buildFormGroup: FormGroup;
+  archtype: Archetype;
 
   dataLoaded: boolean = false;
-  showModal = false;
+  showModal: boolean = false;
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly buildService = inject(BuildService);
@@ -102,8 +107,16 @@ export class AppComponent implements OnInit{
   }
 
   sendAndClean(){
-      this.buildFormGroup.reset();
-      this.getAllParameters();
+      //Capturamos los valores del formulario
+     this.archtype = new Archetype();
+     this.archtype.groupId = this.buildFormGroup.get("groupId").value;
+     this.archtype.artifactId = this.buildFormGroup.get("artifactId").value;
+     this.archtype.name = this.buildFormGroup.get("name").value;
+     this.archtype.description = this.buildFormGroup.get("description").value;
+     this.archtype.packageName = this.buildFormGroup.get("packageName").value;
+     console.log(this.archtype);
+      // this.buildFormGroup.reset();
+      // this.getAllParameters();
   }
 
   readDependencies(pDependencies: Dependencies){
