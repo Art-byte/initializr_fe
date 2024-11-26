@@ -43,6 +43,13 @@ export class AppComponent implements OnInit{
   //Esta lista almacena las dependencias seleccionadas
   depFromModal: DepBody[] = [];
 
+  //Variables para Valores defult
+  rJavaVersion: string;
+  rPackaging: string;
+  rLanguage: string;
+  rTypeProject: string;
+  rBootVersion: string;
+
   //Aqui capturamos los radiobuttons seleccionados
   javaVersionSelected: string;
   packagingSelected: string;
@@ -55,6 +62,7 @@ export class AppComponent implements OnInit{
 
   dataLoaded: boolean = false;
   showModal: boolean = false;
+  depSelected = false;
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly buildService = inject(BuildService);
@@ -78,12 +86,10 @@ export class AppComponent implements OnInit{
       this.dataLoaded = false;
       const validateData = this.buildService.hasPreviousData();
       if(validateData){
-        console.log("Usamos los datos en memoria")
         const data: BuildData = JSON.parse(sessionStorage.getItem("buildData"));
         this.loadDataFromSession(data);
       } else {
         this.buildService.getAllParameters().subscribe((data: BuildData) => {
-          console.log("Cargamos desde 0")
           sessionStorage.setItem("buildData", JSON.stringify(data));
           this.loadDataFromSession(data);
         });
@@ -101,12 +107,23 @@ export class AppComponent implements OnInit{
       this.dataLoaded = true;
     }
 
+  hasDependenciesSelected(){
+      return this.depSelected = this.depFromModal.length > 0;
+  }
+
   setValuesDefault(data: BuildData): void{
     this.buildFormGroup.get('groupId').setValue(data.groupId);
     this.buildFormGroup.get('artifactId').setValue(data.artifactId);
     this.buildFormGroup.get('name').setValue(data.name);
     this.buildFormGroup.get('description').setValue(data.description);
     this.buildFormGroup.get('packageName').setValue(data.packageName);
+
+    //Radio buttons
+    this.setRTypeProject(data.type.defaultValue);
+    this.setRJavaVersion(data.javaVersion.defaultValue);
+    this.setRPackaging(data.packaging.defaultValue);
+    this.setRLanguage(data.language.defaultValue);
+    this.setBootVersion(data.bootVersion.defaultValue);
   }
 
   onDependenciesSelected(dependencies: DepBody[]){
@@ -143,6 +160,32 @@ export class AppComponent implements OnInit{
     return finalArray.join(', ');
   }
 
+  /*==================================================================
+                Metodos asignar valores default a radio buttons
+  ==================================================================*/
+  setRTypeProject(typeDefault: string){
+    this.rTypeProject = typeDefault;
+  }
+
+  setRJavaVersion(javaDefault: string){
+    this.rJavaVersion = javaDefault;
+  }
+
+  setRPackaging(packageDefault: string){
+    this.rPackaging = packageDefault;
+  }
+
+  setRLanguage(languageDefault: string){
+    this.rLanguage = languageDefault;
+  }
+
+  setBootVersion(bootDefault: string){
+    this.rBootVersion = bootDefault;
+  }
+
+/*==================================================================
+              Metodos para rellenar las listas de objetos
+==================================================================*/
 
   readDependencies(pDependencies: Dependencies){
       this.dependenciesList = pDependencies.values;
@@ -168,6 +211,9 @@ export class AppComponent implements OnInit{
       this.typeList = pType.values.filter(p => p.name !== "Gradle Config" && p.name !== "Maven POM");
     }
 
+    /*==================================================================
+     Metodos para capturar el evento de seleccion de radio buttons
+==================================================================*/
     onJavaVersionSelected(javaVersion: string){
       this.javaVersionSelected = javaVersion;
     }
