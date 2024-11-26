@@ -110,7 +110,12 @@ export class AppComponent implements OnInit{
   }
 
   onDependenciesSelected(dependencies: DepBody[]){
+      this.depFromModal = [];
       this.depFromModal = dependencies;
+  }
+
+  removeDependencies(index:string){
+    this.depFromModal = this.depFromModal.filter(dep => dep.id != index);
   }
 
   sendAndClean(){
