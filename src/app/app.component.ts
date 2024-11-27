@@ -18,6 +18,7 @@ import {LangValues} from "./shared/models/lang-values";
 import {BootValues} from "./shared/models/boot-values";
 import {JavaValues} from "./shared/models/java-values";
 import {Archetype} from "./shared/models/archetype";
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-root',
@@ -42,13 +43,6 @@ export class AppComponent implements OnInit{
 
   //Esta lista almacena las dependencias seleccionadas
   depFromModal: DepBody[] = [];
-
-  //Variables para Valores defult
-  rJavaVersion: string;
-  rPackaging: string;
-  rLanguage: string;
-  rTypeProject: string;
-  rBootVersion: string;
 
   //Aqui capturamos los radiobuttons seleccionados
   javaVersionSelected: string;
@@ -117,13 +111,6 @@ export class AppComponent implements OnInit{
     this.buildFormGroup.get('name').setValue(data.name);
     this.buildFormGroup.get('description').setValue(data.description);
     this.buildFormGroup.get('packageName').setValue(data.packageName);
-
-    //Radio buttons
-    this.setRTypeProject(data.type.defaultValue);
-    this.setRJavaVersion(data.javaVersion.defaultValue);
-    this.setRPackaging(data.packaging.defaultValue);
-    this.setRLanguage(data.language.defaultValue);
-    this.setBootVersion(data.bootVersion.defaultValue);
   }
 
   onDependenciesSelected(dependencies: DepBody[]){
@@ -138,7 +125,6 @@ export class AppComponent implements OnInit{
   sendAndClean(){
      this.archtype = new Archetype();
      this.archtype.dependencies = this.formatDependencyList(this.depFromModal);
-
      this.archtype.javaVersion = this.javaVersionSelected;
      this.archtype.packaging = this.packagingSelected;
      this.archtype.language = this.languageSelected;
@@ -150,9 +136,24 @@ export class AppComponent implements OnInit{
      this.archtype.name = this.buildFormGroup.get("name").value;
      this.archtype.description = this.buildFormGroup.get("description").value;
      this.archtype.packageName = this.buildFormGroup.get("packageName").value;
-     console.log(this.archtype);
-      // this.buildFormGroup.reset();
-      // this.getAllParameters();
+
+     const finalProjectName = this.archtype.name;
+
+     this.buildService.sendBuildRequest(this.archtype).subscribe({
+       next: (resp) => {
+         const blob = new Blob([resp], {type: 'application/zip'})
+         saveAs(blob, `${finalProjectName}.zip`);
+          this.buildFormGroup.reset();
+          this.getAllParameters();
+          this.depFromModal = [];
+       },
+       error: (error) => {
+         console.log("Error => ", error);
+       },
+       complete: () => {
+         console.log("Proceso completado");
+       }
+     });
   }
 
   formatDependencyList(arr: DepBody[]): string {
@@ -160,28 +161,6 @@ export class AppComponent implements OnInit{
     return finalArray.join(', ');
   }
 
-  /*==================================================================
-                Metodos asignar valores default a radio buttons
-  ==================================================================*/
-  setRTypeProject(typeDefault: string){
-    this.rTypeProject = typeDefault;
-  }
-
-  setRJavaVersion(javaDefault: string){
-    this.rJavaVersion = javaDefault;
-  }
-
-  setRPackaging(packageDefault: string){
-    this.rPackaging = packageDefault;
-  }
-
-  setRLanguage(languageDefault: string){
-    this.rLanguage = languageDefault;
-  }
-
-  setBootVersion(bootDefault: string){
-    this.rBootVersion = bootDefault;
-  }
 
 /*==================================================================
               Metodos para rellenar las listas de objetos

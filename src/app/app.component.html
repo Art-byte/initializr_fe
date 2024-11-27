@@ -13,7 +13,6 @@
             <input class="form-check-input"
                    type="radio"
                    [value]="typeItem.id"
-                   [checked]="typeItem.id === rTypeProject"
                    (change)="onTypeSelected(typeItem.id)">
             <label class="form-check-label"> {{typeItem.name}} </label>
           </div>
@@ -27,7 +26,6 @@
             <input class="form-check-input"
                    type="radio"
                    [value]="langItem.id"
-                   [checked]="langItem.id === rLanguage"
                    (change)="onLanguageSelected(langItem.id)">
             <label class="form-check-label"> {{langItem.name}} </label>
           </div>
@@ -41,7 +39,6 @@
             <input class="form-check-input"
                    type="radio"
                    [value]="bootItem.id"
-                   [checked]="bootItem.id === rBootVersion"
                    (change)="onBootVersionSelected(bootItem.id)">
             <label class="form-check-label"> {{bootItem.name}} </label>
           </div>
@@ -57,7 +54,6 @@
             <input class="form-check-input"
                    type="radio"
                    [value]="pkgItem.id"
-                   [checked]="pkgItem.id === rPackaging"
                    (change)="onPackagingSelected(pkgItem.id)">
             <label class="form-check-label"> {{pkgItem.name}} </label>
           </div>
@@ -71,7 +67,6 @@
             <input class="form-check-input"
                    type="radio"
                    [value]="javaItem.id"
-                   [checked]="javaItem.id === rJavaVersion"
                    (change)="onJavaVersionSelected(javaItem.id)">
             <label class="form-check-label"> {{javaItem.name}} </label>
           </div>
