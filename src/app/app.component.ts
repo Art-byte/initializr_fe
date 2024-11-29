@@ -57,6 +57,8 @@ export class AppComponent implements OnInit{
   dataLoaded: boolean = false;
   showModal: boolean = false;
   depSelected = false;
+  allRadioButtonsSelected = false;
+
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly buildService = inject(BuildService);
@@ -212,4 +214,21 @@ export class AppComponent implements OnInit{
     onBootVersionSelected(boot: string){
       this.bootVersionSelected = boot;
     }
+
+    //Validacion de todos los radio buttons
+  checkAllRadioButtons(): boolean {
+    const selectedValues = [
+      this.javaVersionSelected,
+      this.packagingSelected,
+      this.languageSelected,
+      this.typeSelected,
+      this.bootVersionSelected
+    ];
+    const allSelected = selectedValues.every(value => value !== null && value !== undefined && value !== '');
+    this.allRadioButtonsSelected = allSelected;
+    return allSelected;
+  }
+
+
+
 }
